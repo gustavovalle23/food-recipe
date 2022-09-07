@@ -1,4 +1,3 @@
-import typing
 import strawberry
 
 
@@ -6,5 +5,3 @@ import strawberry
 class IngredientDto:
     name: str
     quantity: float
-
-

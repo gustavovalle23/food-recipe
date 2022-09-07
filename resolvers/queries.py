@@ -9,10 +9,10 @@ from usecases.recipes_with_ingredients import recipes_with_ingredients_use_case
 
 @strawberry.type
 class Query:
-	available_recipes: typing.List[Recipe] = strawberry.field(
-		resolver=get_all_recipes
-	)
+    available_recipes: typing.List[Recipe] = strawberry.field(
+        resolver=get_all_recipes
+    )
 
-	@strawberry.field
-	def recipes_with_ingredients(self, ingredients: typing.List[IngredientDto]) -> Recipe:
-		return recipes_with_ingredients_use_case(ingredients)
+    @strawberry.field
+    def recipes_with_ingredients(self, ingredients: typing.List[IngredientDto]) -> Recipe:
+        return recipes_with_ingredients_use_case(ingredients)
