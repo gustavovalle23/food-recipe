@@ -1,2 +1,2 @@
-node_modules/
-*log
+venv
+__pycache__
