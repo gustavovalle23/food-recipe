@@ -1,6 +1,6 @@
 
 
-from schemas.recipe import Ingredient, Recipe, UnitMeasurement
+from graphql_types.recipe import Ingredient, Recipe, UnitMeasurement
 
 
 def get_all_recipes():
