@@ -14,5 +14,5 @@ class Query:
     )
 
     @strawberry.field
-    def recipes_with_ingredients(self, ingredients: typing.List[IngredientDto]) -> Recipe:
+    def recipes_with_ingredients(self, ingredients: typing.List[IngredientDto]) -> typing.List[Recipe]:
         return recipes_with_ingredients_use_case(ingredients)
