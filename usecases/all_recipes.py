@@ -1,5 +1,5 @@
-from database import models
 from sqlalchemy import select
+from infra import models
 
 async def find_all_recipes():
     async with models.get_session() as s:

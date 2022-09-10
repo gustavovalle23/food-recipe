@@ -1,7 +1,7 @@
 import typing
 from sqlalchemy import select
 
-from database import models
+from infra import models
 from graphql_types.dtos.recipe import IngredientDto
 from graphql_types.recipe import Recipe
 
