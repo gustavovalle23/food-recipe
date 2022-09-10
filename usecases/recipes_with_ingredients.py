@@ -1,8 +1,9 @@
 import typing
+from sqlalchemy import select
+
+from database import models
 from graphql_types.dtos.recipe import IngredientDto
 from graphql_types.recipe import Recipe
-from database import models
-from sqlalchemy import select
 
 
 async def recipes_with_ingredients_use_case(ingredients: typing.List[IngredientDto]) -> typing.List[Recipe]:

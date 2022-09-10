@@ -1,5 +1,3 @@
-
-
 from graphql_types.recipe import Ingredient, Recipe, UnitMeasurement
 
 
