@@ -1,16 +1,16 @@
 import strawberry
 import typing
+from graphql_types.dtos.recipe import IngredientDto
 
-from mocks.recipes import get_all_recipes
-from schemas.dtos.recipe import IngredientDto
-from schemas.recipe import Recipe, UnitMeasurement
+from usecases.all_recipes import find_all_recipes
+from graphql_types.recipe import Recipe
 from usecases.recipes_with_ingredients import recipes_with_ingredients_use_case
 
 
 @strawberry.type
 class Query:
     available_recipes: typing.List[Recipe] = strawberry.field(
-        resolver=get_all_recipes
+        resolver=find_all_recipes
     )
 
     @strawberry.field

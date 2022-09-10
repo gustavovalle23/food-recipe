@@ -1,17 +1,13 @@
 import typing
-from schemas.dtos.recipe import IngredientDto
-from schemas.recipe import Ingredient, Recipe, UnitMeasurement
+from sqlalchemy import select
+
+from database import models
+from graphql_types.dtos.recipe import IngredientDto
+from graphql_types.recipe import Recipe
 
 
-def recipes_with_ingredients_use_case(ingredients: typing.List[IngredientDto]):
-    return Recipe(
-        name='222',
-        Ingredients=[
-            Ingredient(
-                name='221',
-                quantity=1,
-                unit_of_measurement=UnitMeasurement.CUP
-            ),
-        ],
-        links=[]
-    )
+async def recipes_with_ingredients_use_case(ingredients: typing.List[IngredientDto]) -> typing.List[Recipe]:
+    async with models.get_session() as s:
+        sql = select(models.Recipe).order_by(models.Recipe.name)
+        db_recipes = (await s.execute(sql)).scalars().unique().all()
+    return db_recipes
