@@ -15,12 +15,25 @@ class IngredientBuilder:
 
     @staticmethod
     def buid_list(ingredients_db: List[SchemaIngredient]) -> List[Ingredient]:
-        ingredients = []
-        for ingredient in ingredients_db:
-            ingredients.append(Ingredient(
+        return [
+            Ingredient(
                 name=ingredient.name,
                 quantity=ingredient.quantity,
                 unit_measurement=UnitMeasurement(
                     ingredient.unit_measurement.value)
-            ))
-        return ingredients
+            ) for ingredient in ingredients_db
+        ]
+
+
+class RecipeBuilder:
+    @staticmethod
+    def build_one(recipe: SchemaRecipe) -> Recipe:
+        return Recipe(
+            name=recipe.name,
+            # Ingredients=IngredientBuilder.buid_list(recipe.ingredients),
+            link=recipe.link
+        )
+
+    @staticmethod
+    def build_list(recipes_db: List[SchemaRecipe]) -> List[Recipe]:
+        ...

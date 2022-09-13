@@ -9,7 +9,7 @@ query {
       quantity
       unitOfMeasurement
     }
-    links
+    link
   }
 }
 
@@ -21,7 +21,7 @@ query{
       quantity
       unitOfMeasurement
     }
-    links
+    link
   }
 }
 

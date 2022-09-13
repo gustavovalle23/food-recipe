@@ -25,4 +25,4 @@ class Ingredient:
 class Recipe:
     name: str
     Ingredients: List[Ingredient]
-    links: List[str]
+    link: str

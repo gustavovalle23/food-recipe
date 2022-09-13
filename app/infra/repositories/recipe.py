@@ -12,7 +12,7 @@ async def find_recipes_with_ingredients_repository(ingredient_ids: List[int]):
     return recipes
 
 
-async def find_all_recipes() -> List[Recipe]:
+async def find_all_recipes_repository() -> List[Recipe]:
     async with get_session() as session:
         sql = select(Recipe).order_by(Recipe.name)
         recipes = (await session.execute(sql)).scalars().unique().all()

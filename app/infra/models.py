@@ -33,14 +33,6 @@ class UnitMeasurement(enum.Enum):
     TABLESPOONS = 'tablespoons'
 
 
-class Link(Base):
-    __tablename__ = 'links'
-
-    id = Column(Integer, primary_key=True, index=True)
-    url = Column(String, index=True)
-    active = Column(Boolean, default=True)
-
-
 class Ingredient(Base):
     __tablename__ = 'ingredients'
 
@@ -61,6 +53,7 @@ class Recipe(Base):
     ingredients = relationship(
         'Ingredient', secondary=IngredientRecipe, back_populates='recipes')
     active = Column(Boolean, default=True)
+    link = Column(String, index=True)
 
 
 engine = create_async_engine(
