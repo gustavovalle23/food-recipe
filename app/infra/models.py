@@ -46,7 +46,7 @@ class Ingredient(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    quantity: Column(Float, index=True)
+    quantity = Column(Float, index=True)
     unit_measurement = Column(Enum(UnitMeasurement))
     recipes = relationship(
         'Recipe', secondary=IngredientRecipe, back_populates='ingredients')

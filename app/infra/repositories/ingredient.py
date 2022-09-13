@@ -8,4 +8,3 @@ async def find_all_ingredients_repository() -> List[Ingredient]:
         sql = select(Ingredient).order_by(Ingredient.name)
         ingredients = (await session.execute(sql)).scalars().unique().all()
     return ingredients
-

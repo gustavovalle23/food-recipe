@@ -1,9 +1,8 @@
 from typing import List
-from sqlalchemy import select
-from app.infra.models import Recipe, get_session
+
+from app.infra.models import Recipe
+from app.infra.repositories.recipe import find_all_recipes
 
 async def find_all_recipes() -> List[Recipe]:
-    async with get_session() as s:
-        sql = select(Recipe).order_by(Recipe.id)
-        response = (await s.execute(sql)).scalars().unique().all()
-    return response
+    recipes = await find_all_recipes()
+    return recipes
