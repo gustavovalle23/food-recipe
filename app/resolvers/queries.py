@@ -1,6 +1,6 @@
 import strawberry
 from typing import List
-from app.shared.builders import IngredientBuilder
+from app.shared.builders import IngredientBuilder, RecipeBuilder
 
 from app.usecases.all_recipes import find_all_recipes
 from app.usecases.all_ingredients import find_all_ingredients_use_case
@@ -26,4 +26,5 @@ class Query:
     @strawberry.field
     def recipes_with_ingredients(self, ingredient_ids: List[int]) -> List[Recipe]:
         print(f'Request to recipesWithIngredients: {ingredient_ids}')
-        return recipes_with_ingredients_use_case(ingredient_ids)
+        recipes_db = recipes_with_ingredients_use_case(ingredient_ids)
+        return RecipeBuilder.build_list(recipes_db)

@@ -1,6 +1,6 @@
 import typing
+from app.infra.models import Recipe
 
-from app.graphql_types.recipe import Recipe
 from app.infra.repositories.recipe import SqlAlchemyRecipeRepository
 
 

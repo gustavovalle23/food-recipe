@@ -1,13 +1,15 @@
 import enum
-from sqlalchemy import Integer, Enum
-
-from sqlalchemy import Column, Integer, String, Float, Boolean, Table, ForeignKey
-from sqlalchemy.orm import relationship
 
 import asyncio
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
+from sqlalchemy import (
+    Enum, Column, Integer, String,
+    Float, Boolean, Table, ForeignKey,
+    insert
+)
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -79,11 +81,42 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
                 await session.close()
 
 
+async def seeds():
+    async with get_session() as session:
+        sql = insert(Recipe).values(
+            name='Pie',
+            active=True,
+            link='https://www.tasteofhome.com/recipes/world-s-best-lemon-pie')
+        await session.execute(sql)
+
+        sql = insert(Recipe).values(
+            name='Easy pancakes',
+            active=True,
+            link='https://www.bbcgoodfood.com/recipes/easy-pancakes')
+        await session.execute(sql)
+
+        sql = insert(Recipe).values(
+            name='Chilli con carne',
+            active=True,
+            link='https://www.bbcgoodfood.com/recipes/chilli-con-carne-recipe')
+        await session.execute(sql)
+
+        sql = insert(Recipe).values(
+            name='Yummy golden syrup flapjacks',
+            active=True,
+            link='https://www.bbcgoodfood.com/recipes/yummy-golden-syrup-flapjacks')
+        await session.execute(sql)
+
+        await session.commit()
+
+
+
 async def _async_main():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
     await engine.dispose()
+    await seeds()
 
 
 if __name__ == "__main__":
