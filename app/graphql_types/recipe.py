@@ -1,10 +1,10 @@
-from enum import Enum
+import enum
 from typing import List
 import strawberry
 
 
 @strawberry.enum
-class UnitMeasurement(Enum):
+class UnitMeasurement(enum.Enum):
     MILLIGRAM = 'milligram'
     GRAM = 'gram'
     KILOGRAM = 'kilogram'
@@ -18,11 +18,11 @@ class UnitMeasurement(Enum):
 class Ingredient:
     name: str
     quantity: float
-    unit_of_measurement: UnitMeasurement
+    unit_measurement: UnitMeasurement
 
 
 @strawberry.type
 class Recipe:
     name: str
     Ingredients: List[Ingredient]
-    links: List[str]
+    link: str

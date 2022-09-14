@@ -9,28 +9,30 @@ query {
       quantity
       unitOfMeasurement
     }
-    links
+    link
   }
 }
 
 query{
-  recipesWithIngredients(ingredients: [
-    {
-    name: "Ingredient 1",
-    quantity: 1
-    },
-    {
-    name: "Ingredient 2",
-    quantity: 5
-    }
-  ]) {
+  recipesWithIngredients(ingredients: [1, 2, 23, 64]) {
     name
     Ingredients {
       name
       quantity
       unitOfMeasurement
     }
-    links
+    link
+  }
+}
+
+query {
+  availableIngredients {
+    name
+    quantity
+    unitOfMeasurement
   }
 }
 ```
+
+# To export GraphQL schema:
+strawberry export-schema main:schema > schema.graphql
