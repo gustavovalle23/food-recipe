@@ -1,36 +1,53 @@
 # Avaiable queries:
 
 ```graphql
-query {
-  availableRecipes {
+query RecipesWithIngredients {
+  recipesWithIngredients (ingredientIds: [1, 4, 5]) {
+    id
     name
     Ingredients {
+      id
       name
       quantity
-      unitOfMeasurement
+      unitMeasurement
     }
     link
   }
 }
 
-query{
-  recipesWithIngredients(ingredients: [1, 2, 23, 64]) {
-    name
-    Ingredients {
-      name
-      quantity
-      unitOfMeasurement
-    }
-    link
-  }
-}
-
-query {
-  availableIngredients {
+query AvaiableIngredients {
+  availableIngredients{
+    id
     name
     quantity
-    unitOfMeasurement
+    unitMeasurement
   }
+}
+
+
+query AvailableRecipes {
+  availableRecipes {
+    id
+    name
+    link
+	Ingredients {
+      id
+      name
+      quantity
+      unitMeasurement
+    }
+  }
+}
+```
+
+# Avaiable mutations:
+```graphql
+mutation {
+  createIngredient(ingredient: {
+    name: "Marshmellow",
+    quantity: 1,
+    unitMeasurement: GRAM
+  })
 }
 ```
 

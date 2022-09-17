@@ -1,7 +1,18 @@
-type Ingredient {
+input CreateIngredient {
   name: String!
   quantity: Float!
-  unitOfMeasurement: UnitMeasurement!
+  unitMeasurement: UnitMeasurement!
+}
+
+type Ingredient {
+  id: String!
+  name: String!
+  quantity: Float!
+  unitMeasurement: UnitMeasurement!
+}
+
+type Mutation {
+  createIngredient(ingredient: CreateIngredient!): Boolean!
 }
 
 type Query {
@@ -11,9 +22,10 @@ type Query {
 }
 
 type Recipe {
+  id: String!
   name: String!
   Ingredients: [Ingredient!]!
-  links: [String!]!
+  link: String!
 }
 
 enum UnitMeasurement {
