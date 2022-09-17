@@ -1,4 +1,7 @@
-# Avaiable queries:
+# Food System
+The Food Recipe system brings the possibility to search for recipes, but in a different way. The usual thing is to search for the name of a recipe and the system tells you what ingredients are needed and how to prepare. Here we do the opposite, you inform which ingredients you have and the system informs you which recipes you are able to make.
+
+## Avaiable queries:
 
 ```graphql
 query RecipesWithIngredients {
@@ -40,7 +43,7 @@ query AvailableRecipes {
 }
 ```
 
-# Avaiable mutations:
+## Avaiable mutations:
 ```graphql
 mutation CreateIngredient {
   createIngredient(ingredient: {
