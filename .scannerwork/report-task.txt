@@ -1,0 +1,6 @@
+projectKey=food-recipe
+serverUrl=http://localhost:9000
+serverVersion=9.6.1.59531
+dashboardUrl=http://localhost:9000/dashboard?id=food-recipe
+ceTaskId=AYNN0urkXSzarDZrEIgb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYNN0urkXSzarDZrEIgb
