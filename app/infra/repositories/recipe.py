@@ -1,9 +1,10 @@
 import inspect
 from typing import List
-from sqlalchemy import select
+from sqlalchemy import select, insert
 from sqlalchemy.orm import joinedload
 
 from app.domain.contracts.repos import RecipeRepository
+from app.application.graphql_types.recipe import Recipe as RecipeDto
 from app.infra.errors.common import OnlyImplementationsAbstractMethodsAllowedException
 from app.infra.models import get_session, IngredientRecipe, Recipe
 
@@ -33,3 +34,14 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
             sql = select(Recipe).options(joinedload(Recipe.ingredients))
             recipes = (await session.execute(sql)).scalars().unique().all()
         return recipes
+
+
+    async def save(self, recipe: RecipeDto) -> Recipe:
+        async with get_session() as session:
+            sql = insert(Recipe).values(
+                name=recipe.name,
+                link=recipe.link,
+            )
+
+            await session.execute(sql)
+            await session.commit()

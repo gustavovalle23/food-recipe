@@ -7,3 +7,9 @@ class CreateIngredient:
     name: str
     quantity: float
     unit_measurement: UnitMeasurement
+
+
+@strawberry.input
+class CreateRecipe:
+    name: str
+    link: str
