@@ -1,0 +1,27 @@
+type Ingredient {
+  name: String!
+  quantity: Float!
+  unitOfMeasurement: UnitMeasurement!
+}
+
+type Query {
+  availableRecipes: [Recipe!]!
+  availableIngredients: [Ingredient!]!
+  recipesWithIngredients(ingredientIds: [Int!]!): [Recipe!]!
+}
+
+type Recipe {
+  name: String!
+  Ingredients: [Ingredient!]!
+  links: [String!]!
+}
+
+enum UnitMeasurement {
+  MILLIGRAM
+  GRAM
+  KILOGRAM
+  MILLILITER
+  LITER
+  CUP
+  TABLESPOONS
+}
