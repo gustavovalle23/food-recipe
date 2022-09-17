@@ -65,3 +65,19 @@ mutation AddIngredientToRecipe {
 
 # To export GraphQL schema:
 strawberry export-schema main:schema > schema.graphql
+
+
+### recipesWithIngredients used following sql query
+```sql
+SELECT *
+FROM recipes r
+WHERE r.id NOT IN (
+	SELECT recipe_id
+	FROM ingredient_recipe
+	WHERE ingredient_id NOT IN (10, 2, 4, 5, 1)
+)
+AND r.id IN (
+	SELECT ir.recipe_id
+	FROM ingredient_recipe ir
+)
+```

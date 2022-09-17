@@ -124,11 +124,45 @@ async def seeds():
         )
         await session.execute(sql)
 
-        sql = insert(IngredientRecipe).values(
-            ingredient_id=1,
-            recipe_id=1
+        sql = insert(Ingredient).values(
+            name='Apple',
+            quantity=2,
+            unit_measurement=UnitMeasurement.GRAM,
         )
         await session.execute(sql)
+
+        sql = insert(Ingredient).values(
+            name='Sugar',
+            quantity=10,
+            unit_measurement=UnitMeasurement.TABLESPOONS,
+        )
+        await session.execute(sql)
+
+
+        sql = insert(IngredientRecipe).values(
+            recipe_id=1,
+            ingredient_id=1
+        )
+        await session.execute(sql)
+
+        sql = insert(IngredientRecipe).values(
+            recipe_id=1,
+            ingredient_id=2
+        )
+        await session.execute(sql)
+
+        sql = insert(IngredientRecipe).values(
+            recipe_id=2,
+            ingredient_id=3
+        )
+        await session.execute(sql)
+
+        sql = insert(IngredientRecipe).values(
+            recipe_id=1,
+            ingredient_id=4
+        )
+        await session.execute(sql)
+
 
         await session.commit()
 
