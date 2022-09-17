@@ -42,6 +42,10 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
                 name=recipe.name,
                 link=recipe.link,
             )
-
             await session.execute(sql)
+            await session.commit()
+
+
+    async def add_ingredient_to_recipe(self, recipe: RecipeDto) -> Recipe:
+        async with get_session() as session:
             await session.commit()
