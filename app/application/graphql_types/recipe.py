@@ -1,6 +1,5 @@
 import enum
 from typing import List
-import uuid
 import strawberry
 
 
