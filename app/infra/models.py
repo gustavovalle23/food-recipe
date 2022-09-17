@@ -117,6 +117,13 @@ async def seeds():
         )
         await session.execute(sql)
 
+        sql = insert(Ingredient).values(
+            name='Lemon',
+            quantity=5,
+            unit_measurement=UnitMeasurement.CUP,
+        )
+        await session.execute(sql)
+
         sql = insert(IngredientRecipe).values(
             ingredient_id=1,
             recipe_id=1

@@ -42,7 +42,7 @@ query AvailableRecipes {
 
 # Avaiable mutations:
 ```graphql
-mutation {
+mutation CreateIngredient {
   createIngredient(ingredient: {
     name: "Marshmellow",
     quantity: 1,
@@ -55,6 +55,10 @@ mutation CreateRecipe {
     name: "Orange Pie",
     link: "https://www.recipelink.com/recipecards/889_dinner_with_peaches.html"
   })
+}
+
+mutation AddIngredientToRecipe {
+  addIngredientToRecipe(recipeId: "1", ingredientIds: ["1", "3"])
 }
 
 ```
