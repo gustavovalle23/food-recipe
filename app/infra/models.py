@@ -39,7 +39,7 @@ class Ingredient(Base):
     __tablename__ = 'ingredients'
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    name = Column(String, index=True, unique=True)
     quantity = Column(Float, index=True)
     unit_measurement = Column(Enum(UnitMeasurement))
     recipes = relationship(
@@ -56,6 +56,9 @@ class Recipe(Base):
         'Ingredient', secondary=IngredientRecipe, back_populates='recipes')
     active = Column(Boolean, default=True)
     link = Column(String, index=True)
+
+    def __str__(self) -> str:
+        return f'{self.id} - {self.name}'
 
 
 engine = create_async_engine(
@@ -107,8 +110,20 @@ async def seeds():
             link='https://www.bbcgoodfood.com/recipes/yummy-golden-syrup-flapjacks')
         await session.execute(sql)
 
-        await session.commit()
+        sql = insert(Ingredient).values(
+            name='Strawberry',
+            quantity=10,
+            unit_measurement=UnitMeasurement.GRAM,
+        )
+        await session.execute(sql)
 
+        sql = insert(IngredientRecipe).values(
+            ingredient_id=1,
+            recipe_id=1
+        )
+        await session.execute(sql)
+
+        await session.commit()
 
 
 async def _async_main():

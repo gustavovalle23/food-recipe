@@ -1,22 +1,23 @@
 from typing import List
 from app.infra.models import Ingredient as SchemaIngredient, Recipe as SchemaRecipe
-from app.graphql_types.recipe import Ingredient, Recipe, UnitMeasurement
+from app.application.graphql_types.recipe import Ingredient, Recipe, UnitMeasurement
 
 
 class IngredientBuilder:
     @staticmethod
-    def buid_one(ingredient: SchemaIngredient) -> Ingredient:
-
+    def build_one(ingredient: SchemaIngredient) -> Ingredient:
         return Ingredient(
+            id=ingredient.id,
             name=ingredient.name,
             quantity=ingredient.quantity,
             unit_measurement=UnitMeasurement(ingredient.unit_measurement.value)
         )
 
     @staticmethod
-    def buid_list(ingredients_db: List[SchemaIngredient]) -> List[Ingredient]:
+    def build_list(ingredients_db: List[SchemaIngredient]) -> List[Ingredient]:
         return [
             Ingredient(
+                id=ingredient.id,
                 name=ingredient.name,
                 quantity=ingredient.quantity,
                 unit_measurement=UnitMeasurement(
@@ -29,11 +30,20 @@ class RecipeBuilder:
     @staticmethod
     def build_one(recipe: SchemaRecipe) -> Recipe:
         return Recipe(
+            id=recipe.id,
             name=recipe.name,
-            # Ingredients=IngredientBuilder.buid_list(recipe.ingredients),
+            Ingredients=IngredientBuilder.build_list(recipe.ingredients),
             link=recipe.link
         )
 
     @staticmethod
     def build_list(recipes_db: List[SchemaRecipe]) -> List[Recipe]:
-        ...
+        return [
+            Recipe(
+                id=recipe.id,
+                name=recipe.name,
+                Ingredients=IngredientBuilder.build_list(recipe.ingredients),
+                link=recipe.link
+            ) for recipe in recipes_db
+        ]
+

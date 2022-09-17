@@ -1,7 +1,7 @@
 import abc
 from typing import List
 from app.infra.models import Ingredient, Recipe
-from app.shared.utils import subclass_hook_return
+from app.infra.shared.utils import subclass_hook_return
 
 
 class IngredientRepository(metaclass=abc.ABCMeta):

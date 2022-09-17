@@ -1,14 +1,9 @@
 from typing import List
 from sqlalchemy import select
+from sqlalchemy.orm import joinedload
 
-from app.infra.models import get_session, IngredientRecipe, Recipe
-
-
-from typing import List
-from sqlalchemy import select
 from app.domain.contracts.repos import RecipeRepository
-
-from app.infra.models import get_session
+from app.infra.models import get_session, IngredientRecipe, Recipe
 
 
 class SqlAlchemyRecipeRepository(RecipeRepository):
@@ -21,7 +16,9 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
         return recipes
 
     async def find_all_recipes(self) -> List[Recipe]:
+
         async with get_session() as session:
-            sql = select(Recipe).order_by(Recipe.name)
+            # sql = select(Recipe).select_from(Ingredient).join(Ingredient.recipes)
+            sql = select(Recipe).options(joinedload(Recipe.ingredients))
             recipes = (await session.execute(sql)).scalars().unique().all()
         return recipes

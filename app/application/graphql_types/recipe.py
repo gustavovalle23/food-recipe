@@ -1,5 +1,6 @@
 import enum
 from typing import List
+import uuid
 import strawberry
 
 
@@ -16,6 +17,7 @@ class UnitMeasurement(enum.Enum):
 
 @strawberry.type
 class Ingredient:
+    id: str
     name: str
     quantity: float
     unit_measurement: UnitMeasurement
@@ -23,6 +25,7 @@ class Ingredient:
 
 @strawberry.type
 class Recipe:
+    id: str
     name: str
     Ingredients: List[Ingredient]
     link: str
