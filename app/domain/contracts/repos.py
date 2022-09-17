@@ -39,3 +39,7 @@ class RecipeRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def save(self, recipe) -> Recipe:
         raise NotImplementedError
+
+    @abc.abstractmethod
+    async def add_ingredient_to_recipe(self, recipe_id: str, ingredient_ids: List[str]) -> bool:
+        raise NotImplementedError

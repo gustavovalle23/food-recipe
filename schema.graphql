@@ -19,6 +19,7 @@ type Ingredient {
 type Mutation {
   createIngredient(ingredient: CreateIngredient!): Boolean!
   createRecipe(recipe: CreateRecipe!): Boolean!
+  addIngredientToRecipe(recipeId: String!, ingredientIds: [String!]!): Boolean!
 }
 
 type Query {

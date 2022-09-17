@@ -6,7 +6,7 @@ from sqlalchemy.orm import joinedload
 from app.domain.contracts.repos import RecipeRepository
 from app.application.graphql_types.recipe import Recipe as RecipeDto
 from app.infra.errors.common import OnlyImplementationsAbstractMethodsAllowedException
-from app.infra.models import get_session, IngredientRecipe, Recipe
+from app.infra.models import Ingredient, get_session, IngredientRecipe, Recipe
 
 
 class SqlAlchemyRecipeRepository(RecipeRepository):
@@ -35,7 +35,6 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
             recipes = (await session.execute(sql)).scalars().unique().all()
         return recipes
 
-
     async def save(self, recipe: RecipeDto) -> Recipe:
         async with get_session() as session:
             sql = insert(Recipe).values(
@@ -45,7 +44,26 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
             await session.execute(sql)
             await session.commit()
 
-
-    async def add_ingredient_to_recipe(self, recipe: RecipeDto) -> Recipe:
+    async def add_ingredient_to_recipe(self, recipe_id: str, ingredient_ids: List[str]) -> bool:
         async with get_session() as session:
+            sql = select(Recipe).options(joinedload(
+                Recipe.ingredients)).where(Recipe.id == recipe_id)
+            recipes: List[Recipe] = (await session.execute(sql)).scalars().unique().all()
+            recipe = recipes[0]
+            ingredients_already_added = [
+                ingredient.id for ingredient in recipe.ingredients
+            ]
+
+            sql = select(Ingredient).where(
+                Ingredient.id.in_(ingredient_ids)
+            ).where(Ingredient.id.not_in(ingredients_already_added))
+            ingredients = (await session.execute(sql)).scalars().unique().all()
+
+            for ingredient in ingredients:
+                sql = insert(IngredientRecipe).values(
+                    ingredient_id=ingredient.id,
+                    recipe_id=recipe.id
+                )
+                await session.execute(sql)
+
             await session.commit()
