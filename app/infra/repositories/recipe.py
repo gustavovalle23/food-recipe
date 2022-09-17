@@ -21,16 +21,22 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
 
     async def find_recipes_with_ingredients(self, ingredient_ids: List[int]) -> List[Recipe]:
         async with get_session() as session:
-            sql = select(IngredientRecipe).where(
-                IngredientRecipe.c.ingredient_id.in_([])
+            sql = select(IngredientRecipe.c.recipe_id).where(
+                IngredientRecipe.c.ingredient_id.not_in(ingredient_ids)
             )
+            recipes_with_some_ingredient_missing = (await session.execute(sql)).scalars().unique().all()
+
+            sql = select(IngredientRecipe.c.recipe_id)
+            recipes_with_ingredient = (await session.execute(sql)).scalars().unique().all()
+
+            sql = select(Recipe).where(
+                Recipe.id.not_in(recipes_with_some_ingredient_missing)
+            ).where(Recipe.id.in_(recipes_with_ingredient)).options(joinedload(Recipe.ingredients))
             recipes = (await session.execute(sql)).scalars().unique().all()
         return recipes
 
     async def find_all_recipes(self) -> List[Recipe]:
-
         async with get_session() as session:
-            # sql = select(Recipe).select_from(Ingredient).join(Ingredient.recipes)
             sql = select(Recipe).options(joinedload(Recipe.ingredients))
             recipes = (await session.execute(sql)).scalars().unique().all()
         return recipes
