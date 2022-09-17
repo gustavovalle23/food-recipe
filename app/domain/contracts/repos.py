@@ -35,3 +35,7 @@ class RecipeRepository(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     async def find_all_recipes(self) -> List[Recipe]:
         raise NotImplementedError
+
+    @abc.abstractmethod
+    async def save(self, recipe) -> Recipe:
+        raise NotImplementedError

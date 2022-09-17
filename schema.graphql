@@ -4,6 +4,11 @@ input CreateIngredient {
   unitMeasurement: UnitMeasurement!
 }
 
+input CreateRecipe {
+  name: String!
+  link: String!
+}
+
 type Ingredient {
   id: String!
   name: String!
@@ -13,6 +18,7 @@ type Ingredient {
 
 type Mutation {
   createIngredient(ingredient: CreateIngredient!): Boolean!
+  createRecipe(recipe: CreateRecipe!): Boolean!
 }
 
 type Query {
@@ -24,7 +30,7 @@ type Query {
 type Recipe {
   id: String!
   name: String!
-  Ingredients: [Ingredient!]!
+  ingredients: [Ingredient!]!
   link: String!
 }
 

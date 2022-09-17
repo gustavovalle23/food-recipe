@@ -32,7 +32,7 @@ class RecipeBuilder:
         return Recipe(
             id=recipe.id,
             name=recipe.name,
-            Ingredients=IngredientBuilder.build_list(recipe.ingredients),
+            ingredients=IngredientBuilder.build_list(recipe.ingredients),
             link=recipe.link
         )
 
@@ -42,7 +42,7 @@ class RecipeBuilder:
             Recipe(
                 id=recipe.id,
                 name=recipe.name,
-                Ingredients=IngredientBuilder.build_list(recipe.ingredients),
+                ingredients=IngredientBuilder.build_list(recipe.ingredients),
                 link=recipe.link
             ) for recipe in recipes_db
         ]

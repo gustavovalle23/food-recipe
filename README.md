@@ -49,6 +49,14 @@ mutation {
     unitMeasurement: GRAM
   })
 }
+
+mutation CreateRecipe {
+  createRecipe(recipe: {
+    name: "Orange Pie",
+    link: "https://www.recipelink.com/recipecards/889_dinner_with_peaches.html"
+  })
+}
+
 ```
 
 # To export GraphQL schema:

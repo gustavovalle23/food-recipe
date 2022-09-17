@@ -26,5 +26,5 @@ class Ingredient:
 class Recipe:
     id: str
     name: str
-    Ingredients: List[Ingredient]
+    ingredients: List[Ingredient]
     link: str
