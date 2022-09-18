@@ -84,3 +84,9 @@ AND r.id IN (
 	FROM ingredient_recipe ir
 )
 ```
+
+To execute tests:
+```shell
+python app/infra/models.py
+python -m pytest test -s
+```
