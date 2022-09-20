@@ -8,7 +8,7 @@ query RecipesWithIngredients {
   recipesWithIngredients (ingredientIds: [1, 4, 5]) {
     id
     name
-    Ingredients {
+    ingredients {
       id
       name
       quantity
@@ -33,7 +33,7 @@ query AvailableRecipes {
     id
     name
     link
-	Ingredients {
+	ingredients {
       id
       name
       quantity
