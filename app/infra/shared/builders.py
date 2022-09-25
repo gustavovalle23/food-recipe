@@ -1,6 +1,9 @@
 from typing import List
-from app.infra.models import Ingredient as SchemaIngredient, Recipe as SchemaRecipe
-from app.application.graphql_types.recipe import Ingredient, Recipe, UnitMeasurement
+
+from app.application.graphql_types.recipe import (Ingredient, Recipe,
+                                                  UnitMeasurement)
+from app.infra.models import Ingredient as SchemaIngredient
+from app.infra.models import Recipe as SchemaRecipe
 
 
 class IngredientBuilder:
