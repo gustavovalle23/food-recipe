@@ -63,7 +63,7 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
             sql = select(Ingredient).where(
                 Ingredient.id.in_(ingredient_ids)
             ).where(Ingredient.id.not_in(ingredients_already_added))
-            ingredients = (await session.execute(sql)).scalars().unique().all()
+            ingredients = tuple((await session.execute(sql)).scalars().unique().all())
 
             for ingredient in ingredients:
                 sql = insert(IngredientRecipe).values(
