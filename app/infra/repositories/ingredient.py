@@ -20,7 +20,7 @@ class SqlAlchemyIngredientRepository(IngredientRepository):
 
     async def find_all_ingredients(self) -> List[Ingredient]:
         async with get_session() as session:
-            sql = select(Ingredient).order_by(Ingredient.name)
+            sql = select(Ingredient).order_by(Ingredient.id)
             ingredients = (await session.execute(sql)).scalars().unique().all()
         return ingredients
 

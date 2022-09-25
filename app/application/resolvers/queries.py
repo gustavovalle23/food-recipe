@@ -1,7 +1,7 @@
 import strawberry
 from typing import List
-from app.infra.shared.builders import IngredientBuilder, RecipeBuilder
 
+from app.infra.shared.builders import IngredientBuilder, RecipeBuilder
 from app.domain.usecases.all_recipes import find_all_recipes
 from app.domain.usecases.all_ingredients import find_all_ingredients_use_case
 from app.domain.usecases.recipes_with_ingredients import recipes_with_ingredients_use_case
