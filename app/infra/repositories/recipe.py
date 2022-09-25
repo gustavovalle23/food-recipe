@@ -1,12 +1,14 @@
 import inspect
 from typing import List
-from sqlalchemy import select, insert
+
+from sqlalchemy import insert, select
 from sqlalchemy.orm import joinedload
 
-from app.domain.contracts.repos import RecipeRepository
 from app.application.graphql_types.recipe import Recipe as RecipeDto
-from app.infra.errors.common import OnlyImplementationsAbstractMethodsAllowedException
-from app.infra.models import Ingredient, get_session, IngredientRecipe, Recipe
+from app.domain.contracts.repos import RecipeRepository
+from app.infra.errors.common import \
+    OnlyImplementationsAbstractMethodsAllowedException
+from app.infra.models import Ingredient, IngredientRecipe, Recipe, get_session
 
 
 class SqlAlchemyRecipeRepository(RecipeRepository):
@@ -54,22 +56,29 @@ class SqlAlchemyRecipeRepository(RecipeRepository):
         async with get_session() as session:
             sql = select(Recipe).options(joinedload(
                 Recipe.ingredients)).where(Recipe.id == recipe_id)
+
             recipes: List[Recipe] = (await session.execute(sql)).scalars().unique().all()
             recipe = recipes[0]
-            ingredients_already_added = [
-                ingredient.id for ingredient in recipe.ingredients
-            ]
+            ingredients_already_added = tuple(
+                map(lambda ingredient: ingredient.id, recipe.ingredients)
+            )
 
             sql = select(Ingredient).where(
                 Ingredient.id.in_(ingredient_ids)
             ).where(Ingredient.id.not_in(ingredients_already_added))
-            ingredients = (await session.execute(sql)).scalars().unique().all()
+            ingredients = tuple((await session.execute(sql)).scalars().unique().all())
 
-            for ingredient in ingredients:
-                sql = insert(IngredientRecipe).values(
-                    ingredient_id=ingredient.id,
-                    recipe_id=recipe.id
-                )
-                await session.execute(sql)
+            await multiples_inserts_ingredient_recipe(ingredients, 0, len(ingredients), recipe_id, session)
 
             await session.commit()
+
+
+async def multiples_inserts_ingredient_recipe(ingredients: tuple, index_ingredient, qtd_ingredients, recipe_id, session):
+    if index_ingredient == qtd_ingredients:
+        return
+
+    sql = insert(IngredientRecipe).values(ingredient_id=ingredients[index_ingredient].id,
+                                          recipe_id=recipe_id
+                                          )
+    await session.execute(sql)
+    return multiples_inserts_ingredient_recipe(ingredients, index_ingredient+1, qtd_ingredients, recipe_id, session)

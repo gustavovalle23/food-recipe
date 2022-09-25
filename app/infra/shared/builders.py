@@ -1,6 +1,9 @@
 from typing import List
-from app.infra.models import Ingredient as SchemaIngredient, Recipe as SchemaRecipe
-from app.application.graphql_types.recipe import Ingredient, Recipe, UnitMeasurement
+
+from app.application.graphql_types.recipe import (Ingredient, Recipe,
+                                                  UnitMeasurement)
+from app.infra.models import Ingredient as SchemaIngredient
+from app.infra.models import Recipe as SchemaRecipe
 
 
 class IngredientBuilder:
@@ -15,15 +18,7 @@ class IngredientBuilder:
 
     @staticmethod
     def build_list(ingredients_db: List[SchemaIngredient]) -> List[Ingredient]:
-        return [
-            Ingredient(
-                id=ingredient.id,
-                name=ingredient.name,
-                quantity=ingredient.quantity,
-                unit_measurement=UnitMeasurement(
-                    ingredient.unit_measurement.value)
-            ) for ingredient in ingredients_db
-        ]
+        return map(IngredientBuilder.build_one, ingredients_db)
 
 
 class RecipeBuilder:
@@ -38,12 +33,4 @@ class RecipeBuilder:
 
     @staticmethod
     def build_list(recipes_db: List[SchemaRecipe]) -> List[Recipe]:
-        return [
-            Recipe(
-                id=recipe.id,
-                name=recipe.name,
-                ingredients=IngredientBuilder.build_list(recipe.ingredients),
-                link=recipe.link
-            ) for recipe in recipes_db
-        ]
-
+        return map(RecipeBuilder.build_one, recipes_db)

@@ -77,3 +77,19 @@ async def test_should_return_recipes_with_ingredients():
     assert result.errors is None
     assert result.data.get('recipesWithIngredients') != None
     assert result.data.get('recipesWithIngredients')[0].get('name') == 'Pie'
+
+
+@pytest.mark.asyncio
+async def test_should_add_ingredient_to_recipe():
+    query = """
+            mutation AddIngredientToRecipe {
+            addIngredientToRecipe(recipeId: "2", ingredientIds: ["1", "3"])
+            }
+        """
+
+    result = await schema.execute(
+        query
+    )
+
+    assert result.errors is None
+    assert result.data.get('addIngredientToRecipe') == True
