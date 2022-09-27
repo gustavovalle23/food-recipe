@@ -8,7 +8,7 @@ query RecipesWithIngredients {
   recipesWithIngredients (ingredientIds: [1, 4, 5]) {
     id
     name
-    Ingredients {
+    ingredients {
       id
       name
       quantity
@@ -33,7 +33,7 @@ query AvailableRecipes {
     id
     name
     link
-	Ingredients {
+	ingredients {
       id
       name
       quantity
@@ -83,4 +83,10 @@ AND r.id IN (
 	SELECT ir.recipe_id
 	FROM ingredient_recipe ir
 )
+```
+
+To execute tests:
+```shell
+python app/infra/models.py
+python -m pytest test -s
 ```
