@@ -1,9 +1,14 @@
 from typing import List
+from kink import inject
 
 from app.infra.models import Ingredient
 from app.infra.repositories.ingredient import SqlAlchemyIngredientRepository
 
 
-async def find_all_ingredients_use_case() -> List[Ingredient]:
-    ingredient_repository = SqlAlchemyIngredientRepository()
-    return await ingredient_repository.find_all_ingredients()
+@inject
+class FindAllIngredientsUseCase:
+    def __init__(self, ingredient_repository: SqlAlchemyIngredientRepository) -> None:
+        self._ingredient_repo = ingredient_repository
+
+    async def perform(self) -> List[Ingredient]:
+        return await self._ingredient_repo.find_all_ingredients()

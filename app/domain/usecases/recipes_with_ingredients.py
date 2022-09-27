@@ -1,9 +1,14 @@
 import typing
-from app.infra.models import Recipe
+from kink import inject
 
+from app.infra.models import Recipe
 from app.infra.repositories.recipe import SqlAlchemyRecipeRepository
 
 
-async def recipes_with_ingredients_use_case(ingredient_ids: typing.List[int]) -> typing.List[Recipe]:
-    recipe_repo = SqlAlchemyRecipeRepository()
-    return await recipe_repo.find_recipes_with_ingredients(ingredient_ids)
+@inject
+class FindRecipesWithIngredientsUseCase:
+    def __init__(self, recipe_repository: SqlAlchemyRecipeRepository) -> None:
+        self._recipe_repo = recipe_repository
+
+    async def perform(self, ingredient_ids: typing.List[int]) -> typing.List[Recipe]:
+        return await self._recipe_repo.find_recipes_with_ingredients(ingredient_ids)

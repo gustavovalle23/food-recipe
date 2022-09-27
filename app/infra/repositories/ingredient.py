@@ -1,4 +1,5 @@
 import inspect
+from kink import inject
 from typing import List
 from sqlalchemy import select, insert
 
@@ -8,6 +9,7 @@ from app.infra.errors.common import OnlyImplementationsAbstractMethodsAllowedExc
 from app.infra.models import Ingredient, get_session
 
 
+@inject
 class SqlAlchemyIngredientRepository(IngredientRepository):
     def __init__(self) -> None:
         methods_in_class = inspect.getmembers(
