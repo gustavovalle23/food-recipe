@@ -1,6 +1,6 @@
 import inspect
 from typing import List
-
+from kink import inject
 from sqlalchemy import insert, select
 from sqlalchemy.orm import joinedload
 
@@ -11,6 +11,7 @@ from app.infra.errors.common import \
 from app.infra.models import Ingredient, IngredientRecipe, Recipe, get_session
 
 
+@inject
 class SqlAlchemyRecipeRepository(RecipeRepository):
     def __init__(self) -> None:
         methods_in_class = inspect.getmembers(
