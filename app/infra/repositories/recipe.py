@@ -82,4 +82,4 @@ async def multiples_inserts_ingredient_recipe(ingredients: tuple, index_ingredie
                                           recipe_id=recipe_id
                                           )
     await session.execute(sql)
-    return multiples_inserts_ingredient_recipe(ingredients, index_ingredient+1, qtd_ingredients, recipe_id, session)
+    return  await multiples_inserts_ingredient_recipe(ingredients, index_ingredient+1, qtd_ingredients, recipe_id, session)

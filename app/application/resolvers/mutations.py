@@ -3,9 +3,8 @@ from kink import di
 from typing import List
 
 from app.application.graphql_types.dtos import CreateIngredient, CreateRecipe
-from app.domain.usecases.create_ingredient import CreateIngredientUseCase
-from app.domain.usecases.create_recipe import CreateRecipeUseCase
-from app.domain.usecases.add_ingredient_to_recipe import AddIngredientToRecipeUseCase
+from app.domain.usecases.recipe import CreateRecipeUseCase
+from app.domain.usecases.ingredient import CreateIngredientUseCase, AddIngredientToRecipeUseCase
 
 
 @strawberry.type

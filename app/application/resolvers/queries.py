@@ -2,10 +2,9 @@ import strawberry
 from typing import List
 from kink import di
 
+from app.domain.usecases.recipe import FindAllRecipesUseCase,FindRecipesWithIngredientsUseCase
+from app.domain.usecases.ingredient import FindAllIngredientsUseCase
 from app.infra.shared.builders import IngredientBuilder, RecipeBuilder
-from app.domain.usecases.all_recipes import FindAllRecipesUseCase
-from app.domain.usecases.all_ingredients import FindAllIngredientsUseCase
-from app.domain.usecases.recipes_with_ingredients import FindRecipesWithIngredientsUseCase
 from app.application.graphql_types.recipe import Ingredient, Recipe
 
 
