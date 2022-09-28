@@ -2,9 +2,10 @@ import strawberry
 from kink import di
 from typing import List
 
-from app.application.graphql_types.dtos import CreateIngredient, CreateRecipe
+from app.application.graphql_types.dtos import CreateIngredient, CreateRecipe, LoginInput
 from app.domain.usecases.recipe import CreateRecipeUseCase
 from app.domain.usecases.ingredient import CreateIngredientUseCase, AddIngredientToRecipeUseCase
+from app.domain.usecases.user import LoginUserUseCase
 
 
 @strawberry.type
@@ -27,3 +28,11 @@ class Mutation:
         print('Request to addIngredientToRecipe')
         use_case: AddIngredientToRecipeUseCase = di[AddIngredientToRecipeUseCase]
         return await use_case.perform(recipe_id, ingredient_ids)
+
+
+    @strawberry.field
+    async def login_user(self, login: LoginInput) -> bool:
+        print('Request to loginUser', login)
+        use_case: LoginUserUseCase = di[LoginUserUseCase]
+        await use_case.perform(login)
+        return True

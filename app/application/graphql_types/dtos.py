@@ -13,3 +13,9 @@ class CreateIngredient:
 class CreateRecipe:
     name: str
     link: str
+
+
+@strawberry.input
+class LoginInput:
+    username: str
+    password: str

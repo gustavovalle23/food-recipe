@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 from sqlalchemy import (
-    Enum, Column, Integer, String,
+    Enum, Column, Integer, String, Date,
     Float, Boolean, Table, ForeignKey,
     insert
 )
@@ -59,6 +59,16 @@ class Recipe(Base):
 
     def __str__(self) -> str:
         return f'{self.id} - {self.name}'
+
+
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, index=True)
+    password = Column(String, index=True)
+    birth_date = Column(Date, index=True)
+    active = Column(Boolean, default=True)
 
 
 engine = create_async_engine(
@@ -138,7 +148,6 @@ async def seeds():
         )
         await session.execute(sql)
 
-
         sql = insert(IngredientRecipe).values(
             recipe_id=1,
             ingredient_id=1
@@ -162,7 +171,6 @@ async def seeds():
             ingredient_id=4
         )
         await session.execute(sql)
-
 
         await session.commit()
 

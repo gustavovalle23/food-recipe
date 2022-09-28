@@ -1,3 +1,4 @@
+from datetime import datetime
 import enum
 from typing import List
 import strawberry
@@ -28,3 +29,10 @@ class Recipe:
     name: str
     ingredients: List[Ingredient]
     link: str
+
+
+@strawberry.type
+class User:
+    id: str
+    username: str
+    birth_date: datetime
