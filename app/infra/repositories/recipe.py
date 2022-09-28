@@ -5,7 +5,7 @@ from sqlalchemy import insert, select
 from sqlalchemy.orm import joinedload
 
 from app.application.graphql_types.recipe import Recipe as RecipeDto
-from app.domain.contracts.repos import RecipeRepository
+from app.domain.contracts.repos.recipe import RecipeRepository
 from app.infra.errors.common import \
     OnlyImplementationsAbstractMethodsAllowedException
 from app.infra.models import Ingredient, IngredientRecipe, Recipe, get_session

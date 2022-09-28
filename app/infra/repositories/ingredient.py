@@ -3,8 +3,8 @@ from kink import inject
 from typing import List
 from sqlalchemy import select, insert
 
-from app.domain.contracts.repos import IngredientRepository
 from app.application.graphql_types.recipe import Ingredient as IngredientDto
+from app.domain.contracts.repos.ingredient import IngredientRepository
 from app.infra.errors.common import OnlyImplementationsAbstractMethodsAllowedException
 from app.infra.models import Ingredient, get_session
 
