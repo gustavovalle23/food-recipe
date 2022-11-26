@@ -2,12 +2,12 @@ from sqlalchemy import insert
 from kink import inject
 
 from app.application.graphql_types.recipe import Ingredient
-from app.infra.repositories.ingredient import SqlAlchemyIngredientRepository
+from app.domain.contracts.repos.ingredient import IngredientRepository
 
 
 @inject
 class CreateIngredientUseCase:
-    def __init__(self, ingredient_repository: SqlAlchemyIngredientRepository) -> None:
+    def __init__(self, ingredient_repository: IngredientRepository) -> None:
         self._ingredient_repo = ingredient_repository
 
     async def perform(self, ingredient: Ingredient):

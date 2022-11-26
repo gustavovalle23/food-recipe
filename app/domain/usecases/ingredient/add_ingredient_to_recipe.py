@@ -1,12 +1,12 @@
 from typing import List
 from kink import inject
 
-from app.infra.repositories.recipe import SqlAlchemyRecipeRepository
+from app.domain.contracts.repos.recipe import RecipeRepository
 
 
 @inject
 class AddIngredientToRecipeUseCase:
-    def __init__(self, recipe_repository: SqlAlchemyRecipeRepository) -> None:
+    def __init__(self, recipe_repository: RecipeRepository) -> None:
         self._recipe_repo = recipe_repository
 
     async def perform(self, recipe_id: str, ingredient_ids: List[str]) -> bool:

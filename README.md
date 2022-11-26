@@ -88,5 +88,5 @@ AND r.id IN (
 To execute tests:
 ```shell
 python app/infra/models.py
-python -m pytest test -s
+python -m pytest test -s -vv
 ```
