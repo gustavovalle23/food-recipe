@@ -1,5 +1,6 @@
 import abc
 from typing import List
+
 from app.infra.models import Ingredient
 from app.infra.shared.utils import subclass_hook_return
 from app.application.graphql_types.recipe import Ingredient as IngredientDto
@@ -15,9 +16,9 @@ class IngredientRepository(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def save(self, ingredient: IngredientDto) -> Ingredient:
+    async def save(self, ingredient: IngredientDto) -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def find_ingredients_by_name(self, name: str) -> Ingredient | None:
+    async def find_ingredients_by_name(self, name: str) -> List[Ingredient] | None:
         raise NotImplementedError

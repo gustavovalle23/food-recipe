@@ -26,7 +26,7 @@ class SqlAlchemyIngredientRepository(IngredientRepository):
             ingredients = (await session.execute(sql)).scalars().unique().all()
         return ingredients
 
-    async def save(self, ingredient: IngredientDto) -> Ingredient:
+    async def save(self, ingredient: IngredientDto) -> None:
         async with get_session() as session:
             sql = insert(Ingredient).values(
                 name=ingredient.name,
@@ -37,7 +37,7 @@ class SqlAlchemyIngredientRepository(IngredientRepository):
             await session.execute(sql)
             await session.commit()
 
-    async def find_ingredients_by_name(self, name: str) -> Ingredient | None:
+    async def find_ingredients_by_name(self, name: str) -> List[Ingredient] | None:
         async with get_session() as session:
             sql = select(Ingredient).filter(Ingredient.name == name)
             ingredients = (await session.execute(sql)).scalars().unique().all()

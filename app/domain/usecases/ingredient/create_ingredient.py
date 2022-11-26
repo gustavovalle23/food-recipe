@@ -1,4 +1,3 @@
-from sqlalchemy import insert
 from kink import inject
 
 from app.application.graphql_types.recipe import Ingredient
